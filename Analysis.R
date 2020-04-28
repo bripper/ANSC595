@@ -183,29 +183,3 @@ ggplot(metanmds2, aes(x=MDS1, y=MDS2)) +
   stat_ellipse(aes(color=Feed.id), level = 0.95) +
   theme(legend.title = element_blank()) 
 
-
-
-##3D plots
-#Calculate the Bray-Curtis nMDS for 3-axis
-BC.nmds.3D = metaMDS(OTU.clean, distance="bray", k=3, trymax=1000)
-
-#Extract x-y-z for nmds
-BCxyz = scores(BC.nmds.3D, display="sites")
-#This is a table that looks like 
-BCxyz
-
-#Plot x-y-z and color by age
-plot_ly(x=BCxyz[,1], y=BCxyz[,2], z=BCxyz[,3], type="scatter3d", mode="markers", color=meta$Feed.id, colors=c("blue", "green", "red"))
-
-#Can create two separate 2D plots instead
-par(mfrow=c(1,2))
-#Axis 1 and 2 (x and y)
-plot(BCxyz[,1], BCxyz[,2], main="Bray-Curtis 1:2", pch=20, col=c("blue", "green", "red")[meta$Feed.id])
-legend(-5.4, 3, legend=c("CTM","MR1","MR2"), col=c("green","red","blue"), pch=20)
-#Axis 1 and 3 (x and z)
-plot(BCxyz[,1], BCxyz[,3], main="Bray-Curtis 1:3", pch=20, col=c("blue", "green", "red")[meta$Feed.id])
-
-##Phylogentic-based metrics
-
-
-
